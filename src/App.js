@@ -5,7 +5,7 @@ import './App.css';
 
 // *********************************
 // IMPORTANT ADD YOUR API KEY HERE !
-const WBCAPIKEY=""
+const WBCAPIKEY="c487a902-8bda-4caf-a885-e430451d3428"
 // *********************************
 
 
@@ -19,7 +19,7 @@ function App() {
   }
 
   function loadBoard(uuid) {
-    setViewBoardURL(p => "https://whiteboard.chat/apiaccess/createjoin/" + uuid + "-pgNum-1?key=" + WBCAPIKEY + "&teacher=true&username=tina&userEmail=sid@epiphani.io");
+    setViewBoardURL(p => "https://whiteboard.chat/apiaccess/createjoin/" + uuid + "-pgNum-1?key=" + WBCAPIKEY + "&teacher=true&username=tina&userEmail=sid@epiphani.io&disableNav=true");
   }
 
   return (
