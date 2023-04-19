@@ -5,7 +5,7 @@ import './App.css';
 
 // *********************************
 // IMPORTANT ADD YOUR API KEY HERE !
-const WBCAPIKEY="c487a902-8bda-4caf-a885-e430451d3428"
+const WBCAPIKEY=""
 // *********************************
 
 
