@@ -3,7 +3,11 @@ import {v4 as uuidv4} from 'uuid';
 import './App.css';
 
 
-const WBCAPIKEY="c487a902-8bda-4caf-a885-e430451d3428"
+// *********************************
+// IMPORTANT ADD YOUR API KEY HERE !
+const WBCAPIKEY=""
+// *********************************
+
 
 function App() {
   const [boards, setBoards] = useState([]);
