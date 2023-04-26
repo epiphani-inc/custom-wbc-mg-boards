@@ -8,7 +8,7 @@ import './App.css';
 
 // *********************************
 // IMPORTANT ADD YOUR API KEY HERE !
-const WBCAPIKEY=""
+const WBCAPIKEY="c487a902-8bda-4caf-a885-e430451d3429"
 // *********************************
 
 function App() {
@@ -62,7 +62,9 @@ function App() {
     <div className="App">
       <button className="button" onClick={addBoard}>Add Board</button>
       <p>
-      List of Boards (Click to load board below):
+      <h3>List of Boards:</h3>
+      (Click the board UUID button to load the board into the iframe below.
+      The Student Invite URL should be pasted into an incognito browser window or an entirely different browser)
       </p>
       <table><tbody>
       {boards.map(b => 
