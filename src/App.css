@@ -25,6 +25,19 @@
   color: white;
 }
 
+.button {
+  background-color: azure;
+  padding: 0.5em;
+  border: 1px gray solid;
+  border-radius: 4px;
+  font-size: medium;
+  font-family: roboto;
+}
+
+.boardButton {
+  min-width: 20em;
+}
+
 .App-link {
   color: #61dafb;
 }
