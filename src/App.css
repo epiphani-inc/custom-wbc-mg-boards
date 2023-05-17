@@ -34,6 +34,10 @@
   font-family: roboto;
 }
 
+.ctabutton {
+  margin-right: 10px;
+}
+
 .boardButton {
   min-width: 20em;
 }

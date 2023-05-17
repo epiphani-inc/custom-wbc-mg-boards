@@ -8,7 +8,7 @@ import './App.css';
 
 // *********************************
 // IMPORTANT ADD YOUR API KEY HERE !
-const WBCAPIKEY="c487a902-8bda-4caf-a885-e430451d3429"
+const WBCAPIKEY=""
 // *********************************
 
 function App() {
@@ -35,16 +35,41 @@ function App() {
   function addBoard() {
     let newUUID = uuidv4();
     console.log('Your UUID is: ' + newUUID);
-    setBoards(p => [...p, newUUID]);
-    loadBoard(newUUID);
+    setBoards(p => [...p, {uuid: newUUID, simpleMode: false, collabMode: false}]);
+    loadBoard(newUUID, false, false);
   }
 
-  function loadBoard(uuid) {
-    setViewBoardURL(p => "https://whiteboard.chat/apiaccess/createjoin/" + uuid + "-pgNum-1?key=" + WBCAPIKEY + "&teacher=true&username=Tina&userEmail=sid@epiphani.io&disableNav=true");
+  function addSimpleBoard() {
+    let newUUID = uuidv4();
+    console.log('Your simple board UUID is: ' + newUUID);
+    setBoards(p => [...p, {uuid: newUUID, simpleMode: true, collabMode: false}]);
+    loadBoard(newUUID, true, false);
   }
 
-  function copyStudentInvite(uuid) {
+  function addCollabBoard() {
+    let newUUID = uuidv4();
+    console.log('Your collab board UUID is: ' + newUUID);
+    setBoards(p => [...p, {uuid: newUUID, simpleMode: false, collabMode: true}]);
+    loadBoard(newUUID, false, true);
+  }
+
+  function loadBoard(uuid, simple, collab) {
+    let url = "https://whiteboard.chat/apiaccess/createjoin/" + uuid + "-pgNum-1?key=" + WBCAPIKEY + "&teacher=true&username=Tina&userEmail=sid@epiphani.io&disableNav=true";
+    if (simple) {
+      url = url + "&simpleMode=true"
+    } else if (collab) {
+      url = url + "&collabMode=true"
+    }
+    setViewBoardURL(p => url)
+  }
+
+  function copyStudentInvite(uuid, simple, collab) {
     var studentInviteURL = "https://whiteboard.chat/apiaccess/join/" + uuid + "-pgNum-1?key=" + WBCAPIKEY + "&resetStore=true&teacher=false&username=Lisa&userEmail=sid@epiphani.ai&disableNav=true";
+    if (simple) {
+      studentInviteURL = studentInviteURL + "&simpleMode=true"
+    } else if (collab) {
+      studentInviteURL = studentInviteURL + "&collabMode=true"
+    }
     navigator.clipboard.writeText(studentInviteURL)
     console.log("student invite = ", studentInviteURL)
     showCopiedConfMsg();
@@ -60,23 +85,23 @@ function App() {
 
   return (
     <div className="App">
-      <button className="button" onClick={addBoard}>Add Board</button>
-      <p>
+      <button className="button ctabutton" onClick={addBoard}>Add Teaching Board</button>
+      <button className="button ctabutton" onClick={addSimpleBoard}>Add Simple Teaching Board</button>
+      <button className="button ctabutton" onClick={addCollabBoard}>Add Collaboration Board</button>
       <h3>List of Boards:</h3>
       (Click the board UUID button to load the board into the iframe below.
       The Student Invite URL should be pasted into an incognito browser window or an entirely different browser)
-      </p>
       <table><tbody>
-      {boards.map(b => 
-      <tr key={b}><td>
+      {boards.map((b) =>
+      <tr key={b.uuid}><td>
         {
-          <button className="button boardButton" onClick={() => loadBoard(b)}>{b}</button>
+          <button className="button boardButton" onClick={() => loadBoard(b.uuid, b.simpleMode, b.collabMode)}>{b.uuid}</button>
         }
       </td>
       <td>
         {
-          <button className="button" onClick={() => copyStudentInvite(b)}>
-            Copy Student Invite
+          <button className="button" onClick={() => copyStudentInvite(b.uuid, b.simpleMode, b.collabMode)}>
+            Copy {b.collabMode ? "" : "Student"} Invite
           </button>
         }
       </td>
@@ -101,7 +126,7 @@ function App() {
       <iframe title="Whiteboard.chat In iframe"
         style={{position:'relative', width:'100%', height:'80%', minWidth:'1000px'}}
         src={viewBoardURL}
-        frameborder="0"
+        frameBorder="0"
         allow="camera; microphone">
       </iframe>
       </div>
